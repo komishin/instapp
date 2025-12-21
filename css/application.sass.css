@@ -1,3 +1,32 @@
+.header {
+  background-color: #000;
+  height: 44px;
+  width: 100px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+.white_text {
+  color: #fff;
+}
+
+.header_container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px 11px 21px;
+}
+
+.header_right {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  align-items: center;
+}
+
 .container {
   padding-inline: 16px;
+  padding-top: 44px;
 }
