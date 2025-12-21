@@ -16,6 +16,17 @@
     = stylesheet_link_tag :app, "data-turbo-track": "reload"
     = javascript_importmap_tags
   %body
+    %header.header
+      .header_container
+        .header_left
+          %p.header_time{class: ("white_text" if current_user.nil? || !user_signed_in?)}
+            = Time.current.strftime("%-H:%M")
+        .header_right
+          .mobile_icon
+            - if current_user.nil? || !user_signed_in?  # サインイン/アウト画面
+              = image_tag "Mobile_white.png", class: "bar full white_signal", alt: "電波"
+            - else  # 他の画面
+              = image_tag "Mobile-black.png", class: "bar full black_signal", alt: "電波"
     - if flash.present?
       .flash
         - flash.each do |key, value|
