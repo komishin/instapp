@@ -1,10 +1,10 @@
 .header {
-  background-color: #000;
   height: 44px;
-  width: 100px;
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  width: 100%;
   z-index: 10;
 }
 
@@ -24,6 +24,32 @@
   gap: 5px;
   justify-content: center;
   align-items: center;
+}
+
+.mv_image {
+  width: 100%;
+  height: 298px;
+}
+.mv_image img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+input, select {
+  border: none;
+}
+input.text, select.text {
+  width: 100%;
+  padding: 4px 0 10px;
+  border-bottom: 1px solid rgb(158, 158, 158);
+}
+
+.new_user {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .container {
