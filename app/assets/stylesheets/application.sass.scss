@@ -1,7 +1,36 @@
+@use "variables" as *;// asは、そのままの＄表記のまま変数で使うために必要
 @use "header";
 @use "form";
 @use "button";
 @use "footer";
+
+html {
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  color: $text-base-color;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+}
+
+a {
+  text-decoration: none;
+}
 
 .container{
     padding-inline: 16px;
