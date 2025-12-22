@@ -60,18 +60,20 @@ label {
 .forgot {
   text-align: right;
   color: rgb(204, 204, 204);
+  font-size: 11px;
+  margin-top: 16px;
 }
 
 .submit_button {
   background-color: rgb(255, 230, 0);
   border: none;
-  color: rgb(0, 0, 0) te;
-  font-weight: 400px;
+  color: rgb(0, 0, 0);
   padding: 14px 0;
   width: 100%;
   font-size: 14px;
   height: 48px;
   margin-top: 130px;
+  font-family: "Poppins", sans-serif;
 }
 
 .footer {
@@ -97,6 +99,51 @@ label {
   border-bottom: 5px solid rgb(37, 34, 34);
 }
 
+.flash {
+  position: fixed;
+  top: 16px;
+  font-size: 12px;
+  right: 16px;
+  width: 160px;
+  background: white;
+  -webkit-animation: fade-in-out;
+  animation: fade-in-out;
+  visibility: hidden;
+  z-index: 1;
+  padding: 16px;
+  -webkit-animation-duration: 5s;
+          animation-duration: 5s;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
+}
+
+@-webkit-keyframes fade-in-out {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  50% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+@keyframes fade-in-out {
+  0% {
+    visibility: visible;
+    opacity: 1;
+  }
+  50% {
+    visibility: visible;
+    opacity: 1;
+  }
+  100% {
+    visibility: hidden;
+    opacity: 0;
+  }
+}
 html {
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
