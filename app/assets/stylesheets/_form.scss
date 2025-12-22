@@ -1,3 +1,5 @@
+@use "variables" as *;// asは、そのままの＄表記のまま変数で使うために必要
+
 .mv_image{
     width: 100%;
     height: 298px;
@@ -34,4 +36,6 @@ label{
 .forgot{
     text-align: right;
     color: rgba(204, 204, 204, 1);
+    font-size: $font-sm;
+    margin-top: 16px;
 }
