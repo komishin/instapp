@@ -1,5 +1,4 @@
-.mv_image
-  = image_tag "Instapp-mv.png", alt: "Instapp"
+= render "devise/shared/common_header"
 .container
   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
     .field
