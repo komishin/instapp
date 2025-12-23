@@ -1,0 +1,13 @@
+@use "variables" as *;// asは、そのままの＄表記のまま変数で使うために必要
+
+.submit_button{
+    background-color: rgba(255, 230, 0, 1);
+    border: none;
+    color: rgba(0, 0, 0, 1);
+    padding: 14px 0;
+    width: 100%;
+    font-size: 14px;
+    height: 48px;
+    margin-top: 130px;
+    font-family: $primary-family;
+}
