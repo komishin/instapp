@@ -1,12 +1,40 @@
 .container.profilePage
   .profilePage_user
-    .profilePage_user_image
-    -#   = image_tag 'default-avatar.png'
     .profilePage_user_basicInfo
       .profilePage_user_name
         .profilePage_user_displayName
-        -#   = current_user.display_name
-        .profilePage_user_actionButton
-        -#   = link_to 'Edit', edit_profile_path
-      .profilePage_user_introduction
-        あああああああああああああああああああああああああああああああああああああああああああああああああああああ
+          / ここでユーザー名を表示
+          = @profile.username
+
+    .profilePage_user_image
+      / 画像があれば表示、なければデフォルトを表示
+      - if @profile.avatar.attached?
+        = image_tag @profile.avatar
+      - else
+        = image_tag "default-avatar.png"
+
+    .profilePage_user_stats
+      .stat_value
+        = @profile.posts_count
+      .profilePage_user_stat
+        .stat_label posts
+      .profilePage_user_stat
+        .stat_value
+          = @profile.followers_count
+      .stat_label followers
+      .profilePage_user_stat
+        .stat_value
+          = @profile.following_count
+      .stat_label following
+
+  .profilePage_user_posts
+    - if @profile.user.posts.any?
+      - @profile.user.posts.each do |post|
+        .profilePage_user_post
+          - if post.eyecatch.attached?
+            = image_tag post.eyecatch
+          - else
+            .post_no_image No Image
+    - else
+      .profilePage_no_posts
+        No post
