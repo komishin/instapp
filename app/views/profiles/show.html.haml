@@ -1,0 +1,48 @@
+.container.profilePage
+  .back_button
+    = link_to root_path do
+      = image_tag "back_icon.png", alt: "Back"
+  .profilePage_user
+    .profilePage_user_basicInfo
+      .profilePage_user_name
+        .profilePage_user_displayName
+          / ここでユーザー名を表示
+          = @profile.username
+
+    .profilePage_user_image
+      / id="avatar_trigger" を付与
+      #avatar_trigger{ style: "cursor: pointer;" }
+        - if @profile.avatar.attached?
+          = image_tag @profile.avatar, id: "avatar_preview"
+        - else
+          = image_tag "Instapp-mv.png", id: "avatar_preview"
+
+      / id="avatar_input" を付与。class: "d-none" などで隠す
+      = form_with(model: @profile, url: profile_path, method: :patch, local: true) do |f|
+        = f.file_field :avatar, id: "avatar_input", style: "display: none;", onchange: "this.form.submit();", accept: "image/*"
+
+    .profilePage_user_stats
+      .profilePage_user_stat
+        .stat_values
+          = @profile.posts_count
+        .stat_label posts
+      .profilePage_user_stat
+        .stat_value
+          = @profile.followers_count
+        .stat_label followers
+      .profilePage_user_stat
+        .stat_value
+          = @profile.following_count
+        .stat_label following
+
+  .profilePage_user_posts
+    - if @profile.user.posts.any?
+      - @profile.user.posts.each do |post|
+        .profilePage_user_post
+          - if post.eyecatch.attached?
+            = image_tag post.eyecatch
+          - else
+            .post_no_image No Image
+    - else
+      .profilePage_no_posts
+        No post
