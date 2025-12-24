@@ -7,25 +7,30 @@
           = @profile.username
 
     .profilePage_user_image
-      / 画像があれば表示、なければデフォルトを表示
-      - if @profile.avatar.attached?
-        = image_tag @profile.avatar
-      - else
-        = image_tag "default-avatar.png"
+      / id="avatar_trigger" を付与
+      #avatar_trigger{ style: "cursor: pointer;" }
+        - if @profile.avatar.attached?
+          = image_tag @profile.avatar, id: "avatar_preview"
+        - else
+          = image_tag "Instapp-mv.png", id: "avatar_preview"
+
+      / id="avatar_input" を付与。class: "d-none" などで隠す
+      = form_with(model: @profile, url: profile_path, method: :patch, local: true) do |f|
+        = f.file_field :avatar, id: "avatar_input", style: "display: none;", onchange: "this.form.submit();", accept: "image/*"
 
     .profilePage_user_stats
-      .stat_value
-        = @profile.posts_count
       .profilePage_user_stat
+        .stat_values
+          = @profile.posts_count
         .stat_label posts
       .profilePage_user_stat
         .stat_value
           = @profile.followers_count
-      .stat_label followers
+        .stat_label followers
       .profilePage_user_stat
         .stat_value
           = @profile.following_count
-      .stat_label following
+        .stat_label following
 
   .profilePage_user_posts
     - if @profile.user.posts.any?

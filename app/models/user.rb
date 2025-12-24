@@ -2,19 +2,23 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates :username, uniqueness: true, presence: true # presence（存在チェック）も入れるとより安全
+  validates :username, uniqueness: true, presence: true
 
   has_one :profile, dependent: :destroy
   has_many :posts, dependent: :destroy
 
-  # ユーザー登録後にプロフィールを自動作成
-  after_create :prepare_profile
+  # 1. 外部（Controller）から呼び出せるように private の上に置く
+  def prepare_profile
+    profile || create_profile
+  end
+
+  # 2. ユーザー登録後に自動作成したい場合は after_create を使う
+  after_create :create_default_profile
 
   private
 
-  def prepare_profile
-    # user_id は自動で入りますが、profile側にusernameカラムがある場合は明示的に渡します
-    # もしprofileにusernameカラムを作らない設計（Userから参照する設計）なら、単に create_profile でOKです。
+  # after_create専用の非公開メソッド
+  def create_default_profile
     create_profile
   end
 end
