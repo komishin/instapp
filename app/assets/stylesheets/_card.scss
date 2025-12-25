@@ -1,0 +1,91 @@
+@use "variables" as *;// asは、そのままの＄表記のまま変数で使うために必要
+
+.homepage_photo{
+    width: 20px;
+    height: 16px;
+}
+
+.card{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card_container{
+    padding-bottom: 36px;
+}
+
+.card_header{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 11px;
+}
+
+.card_avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.card_account{
+    font-size: $font-md;
+}
+
+.card_timeAgo{
+    font-size: $font-sm;
+    color: $text-sub-color;
+}
+
+.card_content {
+  display: flex;
+  width: 100%;
+  gap: 7px;
+
+  .left_img {
+    width: 57.7%;
+    // コンテナ全体の高さを決めたい場合は aspect-ratio
+    aspect-ratio: 4 / 3;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .right_images {
+    width: 42.3%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    .card_img {
+      flex: 1;
+      // 高さを半分ずつにするため、親のflex-direction: columnとflex: 1で制御
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+.card_actions{
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    align-items: center;
+    margin: 12px 0 8px;
+}
+
+.card_likes{
+    font-size: 12px;
+}
+
+.card_caption{
+    font-size: 12px;
+}

@@ -6,6 +6,12 @@
     left: 0;
     right: 0;
     z-index: 10;
+    background-color: #fff;
+    transition: transform 0.3s ease; // スムーズな動き
+
+    &.hidden {
+        transform: translateY(100%); // 下方向に隠す
+  }
 }
 
 .center-underline {
