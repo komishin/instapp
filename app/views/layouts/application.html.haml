@@ -22,24 +22,24 @@
     %header.header
       .header_container
         .header_left
-          %p.header_time{class: ("white_text" if current_user.nil? || !user_signed_in?)}
+          %p.header_time{class: white_text_class}
             = Time.current.strftime("%-H:%M")
         .header_right
           .header_icon.mobile_icon
-            - if current_user.nil? || !user_signed_in?  # サインイン/アウト画面
-              = image_tag "Mobile_white.png", class: "bar full white_signal", alt: "電波"
+            - if devise_controller? # サインイン/アウト画面
+              = image_tag "Mobile_#{header_suffix}.png", class: "bar full white_signal", alt: "電波"
             - else  # 他の画面
-              = image_tag "Mobile_black.png", class: "bar full black_signal", alt: "電波"
+              = image_tag "Mobile_#{header_suffix}.png", class: "bar full black_signal", alt: "電波"
           .header_icon.wifi_icon
-            - if current_user.nil? || !user_signed_in?  # サインイン/アウト画面
-              = image_tag "Wifi_white.png", class: "bar full white_signal", alt: "wifi"
+            - if devise_controller? # サインイン/アウト画面
+              = image_tag "Wifi_#{header_suffix}.png", class: "bar full white_signal", alt: "wifi"
             - else  # 他の画面
-              = image_tag "Wifi_black.png", class: "bar full black_signal", alt: "wifi"
+              = image_tag "Wifi_#{header_suffix}.png", class: "bar full black_signal", alt: "wifi"
           .header_icon.Battery_icon
-            - if current_user.nil? || !user_signed_in?  # サインイン/アウト画面
-              = image_tag "Battery_white.png", class: "bar full white_signal", alt: "電池"
+            - if devise_controller?
+              = image_tag "Battery_#{header_suffix}.png", class: "bar full white_signal", alt: "電池"
             - else  # 他の画面
-              = image_tag "Battery_black.png", class: "bar full black_signal", alt: "電池"
+              = image_tag "Battery_#{header_suffix}.png", class: "bar full black_signal", alt: "電池"
     - if flash.present?
       .flash
         - flash.each do |key, value|
