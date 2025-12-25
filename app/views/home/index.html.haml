@@ -1,4 +1,30 @@
 .container.homePage
-  .homePage_photo 
+  .homePage_photo
     = image_tag "photo.png", alt: "Home Photo"
-
+  .card
+    .card_header
+      .card_avatar
+        = image_tag "article_avatar.png", alt: "Avatar"
+      .article_title
+        .article_account
+        %p Jmax_21
+        .article_timeAgo
+        %p 3 hours ago
+    .card_content
+      .card_img
+        = image_tag "demo-1.png", alt: "Article Image1"
+      .card_img
+        = image_tag "demo-2.png", alt: "Article Image1"
+      .card_img
+        = image_tag "demo-3.png", alt: "Article Image1"
+    .card_actions
+      .card_action
+        = image_tag "like.png", alt: "Like"
+      .card_action
+        = image_tag "comment.png", alt: "Comment"
+      .card_action
+        = image_tag "share.png", alt: "Share"
+    .card_likes
+      %p Jasmine and 12,000 other liked your post
+    .card_caption
+      %pJmax_21  Summer holiday :3

@@ -187,6 +187,13 @@ label {
   font-size: 36px;
 }
 
+.back_button {
+  width: 17px;
+  height: 12px;
+  position: relative;
+  top: 10px;
+}
+
 html {
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
