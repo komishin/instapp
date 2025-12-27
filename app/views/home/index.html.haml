@@ -1,6 +1,7 @@
 .container.homePage
   .homePage_photo
-    = image_tag "photo.png", alt: "Home Photo"
+    = link_to new_post_path do
+      = image_tag "photo.png", alt: "Home Photo"
 
   - @posts.each do |post|
     .card
