@@ -9,12 +9,11 @@
         .card_header
           .post_profile.card_profile
             .new_post_image
-              / id="avatar_trigger" を付与
-              #avatar_trigger{ style: "cursor: pointer;" }
-                - if @profile.avatar.attached?
-                  = image_tag @profile.avatar, id: "avatar_preview"
-                - else
-                  = image_tag "Instapp-mv.png", id: "avatar_preview"
+              / ここを @profile ではなく post.user.profile に変更します
+              - if post.user.profile&.avatar&.attached?
+                = image_tag post.user.profile.avatar
+              - else
+                = image_tag "Instapp-mv.png"
 
           .card_title
             .card_account

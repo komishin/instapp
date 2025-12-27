@@ -1,7 +1,10 @@
 class HomeController < ApplicationController
-def index
-    # データベースからすべての投稿を取得し、作成日順（新しい順）に並べて代入する
-    @posts = Post.all.order(created_at: :desc)
-    @profile = current_user.prepare_profile
+  def index
+    # includes を使って、投稿に紐づくユーザーとプロフィールをまとめて取得する
+    @posts = Post.all.includes(user: :profile).order(created_at: :desc)
+
+    if user_signed_in?
+      @profile = current_user.prepare_profile
+    end
   end
 end
