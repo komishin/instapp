@@ -2,92 +2,54 @@
   .homePage_photo
     = image_tag "photo.png", alt: "Home Photo"
 
-  .card
-    .card_container
-      .card_header
-        .card_avatar
-          = image_tag "article_avatar.png", alt: "Avatar"
-        .card_title
-          .card_account
-            %p Jmax_21
-          .card_timeAgo
-            %p 3 hours ago
-      .card_content
-        .left_img
-          = image_tag "demo-1.png", alt: "Article Image1"
-          .img_carousel
-            = image_tag "carousel.png", alt: "Carousel"
-        .right_images
-          .card_img
-            = image_tag "demo-2.png", alt: "Article Image2"
-          .card_img
-            = image_tag "demo-3.png", alt: "Article Image3"
-      .card_actions
-        .card_action
-          = image_tag "like.png", alt: "Like"
-        .card_action
-          = image_tag "comment.png", alt: "Comment"
-        .card_action
-          = image_tag "share.png", alt: "Share"
-      .card_likes
-        %p Jasmine and 12,000 other liked your post
-      .card_caption
-        %p Jmax_21 Summer holiday :3
+  - @posts.each do |post|
+    .card
+      .card_container
+        .card_header
+          .card_avatar
+            -# 本来はユーザーのプロフィール画像を表示（設定していれば）
+            = image_tag "article_avatar.png", alt: "Avatar"
+          .card_title
+            .card_account
+              -# 投稿したユーザーの名前を表示
+              %p= post.user.username
+            .card_timeAgo
+              -# 投稿からの経過時間を表示
+              %p= time_ago_in_words(post.created_at) + " ago"
 
-    .card_container
-      .card_header
-        .card_avatar
-          = image_tag "article_avatar.png", alt: "Avatar"
-        .card_title
-          .card_account
-            %p Jmax_21
-          .card_timeAgo
-            %p 3 hours ago
-      .card_content
-        .left_img
-          = image_tag "demo-1.png", alt: "Article Image1"
-        .right_images
-          .card_img
-            = image_tag "demo-2.png", alt: "Article Image2"
-          .card_img
-            = image_tag "demo-3.png", alt: "Article Image3"
-      .card_actions
-        .card_action
-          = image_tag "like.png", alt: "Like"
-        .card_action
-          = image_tag "comment.png", alt: "Comment"
-        .card_action
-          = image_tag "share.png", alt: "Share"
-      .card_likes
-        %p Jasmine and 12,000 other liked your post
-      .card_caption
-        %p Jmax_21 Summer holiday :3
+        .card_content
+          .left_img
+            -# 1枚目の画像を表示
+            - if post.images.attached? && post.images[0]
+              = image_tag post.images[0], alt: "Main Image"
+            - else
+              = image_tag "demo-1.png", alt: "No Image"
 
-    .card_container
-      .card_header
-        .card_avatar
-          = image_tag "article_avatar.png", alt: "Avatar"
-        .card_title
-          .card_account
-            %p Jmax_21
-          .card_timeAgo
-            %p 3 hours ago
-      .card_content
-        .left_img
-          = image_tag "demo-1.png", alt: "Article Image1"
-        .right_images
-          .card_img
-            = image_tag "demo-2.png", alt: "Article Image2"
-          .card_img
-            = image_tag "demo-3.png", alt: "Article Image3"
-      .card_actions
-        .card_action
-          = image_tag "like.png", alt: "Like"
-        .card_action
-          = image_tag "comment.png", alt: "Comment"
-        .card_action
-          = image_tag "share.png", alt: "Share"
-      .card_likes
-        %p Jasmine and 12,000 other liked your post
-      .card_caption
-        %p Jmax_21 Summer holiday :3
+            .img_carousel
+              = image_tag "carousel.png", alt: "Carousel"
+
+          .right_images
+            -# 画像が2枚以上ある時だけ右側を表示する工夫
+            - if post.images.attached? && post.images.count > 1
+              .card_img
+                = image_tag post.images[1]
+              - if post.images[2]
+                .card_img
+                  = image_tag post.images[2]
+
+        .card_actions
+          .card_action
+            = image_tag "like.png", alt: "Like"
+          .card_action
+            = image_tag "comment.png", alt: "Comment"
+          .card_action
+            = image_tag "share.png", alt: "Share"
+
+        .card_likes
+          -# いいね数を表示
+          %p #{number_with_delimiter(post.likes_count)} likes
+
+        .card_caption
+          %p
+            %strong= post.user.username
+            = post.caption
