@@ -5,6 +5,7 @@ class User < ApplicationRecord
   validates :username, uniqueness: true, presence: true
 
   has_one :profile, dependent: :destroy
+  has_one_attached :avatar
   has_many :posts, dependent: :destroy
   has_many :articles, dependent: :destroy
 

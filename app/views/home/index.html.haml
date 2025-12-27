@@ -8,14 +8,18 @@
       .card_container
         .card_header
           .card_avatar
-            -# 本来はユーザーのプロフィール画像を表示（設定していれば）
-            = image_tag "article_avatar.png", alt: "Avatar"
+            -# current_user ではなく post.user に変更します
+            - if post.user.avatar.attached?
+              = image_tag post.user.avatar, alt: post.user.username
+            - else
+              -# デフォルト画像を表示
+              = image_tag "article_avatar.png", alt: "Default Avatar"
+
           .card_title
             .card_account
-              -# 投稿したユーザーの名前を表示
+              -# ここも投稿者の名前に変更
               %p= post.user.username
             .card_timeAgo
-              -# 投稿からの経過時間を表示
               %p= time_ago_in_words(post.created_at) + " ago"
 
         .card_content
