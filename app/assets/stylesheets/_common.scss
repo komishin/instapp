@@ -5,3 +5,34 @@
     position: relative;
     top: 10px;
 }
+
+.card_destroy_icon {
+  position: relative;
+  width: 20px;
+
+  .dropdown {
+    cursor: pointer;
+
+    &:hover .dropdown-content {
+      display: block; // ホバーで表示させる場合
+    }
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    z-index: 100;
+    min-width: 100px;
+
+    a {
+      display: block;
+      padding: 10px;
+      text-decoration: none;
+      color: black;
+      &:hover { background-color: #f1f1f1; }
+    }
+  }
+}

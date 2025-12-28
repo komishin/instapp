@@ -9,33 +9,42 @@
         .card_header
           .post_profile.card_profile
             .new_post_image
-              / ここを @profile ではなく post.user.profile に変更します
               - if post.user.profile&.avatar&.attached?
                 = image_tag post.user.profile.avatar
               - else
                 = image_tag "Instapp-mv.png"
 
-          .card_title
-            .card_account
-              -# ここも投稿者の名前に変更
-              %p= post.user.username
-            .card_timeAgo
-              %p= time_ago_in_words(post.created_at) + " ago"
+            .card_title
+              .card_account
+                %p= post.user.username
+              .card_timeAgo
+                %p= time_ago_in_words(post.created_at) + " ago"
 
-        .card_content
+          -# ここからが修正ポイント
+          - if user_signed_in? && post.user == current_user
+            .card_destroy_icon
+              .dropdown
+                = image_tag 'actions.svg', class: 'dropbtn'
+                .dropdown-content.mini
+                  -# インデックス表示(eachの中)なら @post ではなく post を使う
+                  = link_to '編集する', edit_post_path(post)
+                  = link_to '削除する', post_path(post), data: { turbo_method: 'delete', turbo_confirm: '本当に削除してもよろしいですか？' }
+
+        .card_content{ class: post.images.count <= 1 ? "is-single" : "" }
           .left_img
-            -# 1枚目の画像を表示
             - if post.images.attached? && post.images[0]
               = image_tag post.images[0], alt: "Main Image"
             - else
               = image_tag "demo-1.png", alt: "No Image"
 
-            .img_carousel
-              = image_tag "carousel.png", alt: "Carousel"
+            -# 1枚だけの時はカルーセルアイコンも不要であれば、if文で囲う
+            - if post.images.count > 1
+              .img_carousel
+                = image_tag "carousel.png", alt: "Carousel"
 
-          .right_images
-            -# 画像が2枚以上ある時だけ右側を表示する工夫
-            - if post.images.attached? && post.images.count > 1
+          -# 2枚以上ある時だけ右側を表示
+          - if post.images.attached? && post.images.count > 1
+            .right_images
               .card_img
                 = image_tag post.images[1]
               - if post.images[2]

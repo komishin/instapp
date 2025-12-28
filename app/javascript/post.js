@@ -49,3 +49,4 @@ document.addEventListener('turbo:load', () => {
     fileInput.files = dataTransfer.files;
   });
 });
+
