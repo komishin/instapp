@@ -48,6 +48,7 @@
   width: 100%;
   gap: 7px;
   margin-top: 11px;
+  align-items: stretch;
 
   .left_img {
     width: 57.7%; // 通常時
@@ -73,6 +74,61 @@
         width: 100%;
         height: 100%;
         display: block;
+      }
+    }
+
+    .simple-carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+
+      &__track {
+        display: flex;
+        transition: transform 0.3s ease;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        touch-action: pan-y;
+      }
+
+      &__slide {
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+      }
+
+      img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+
+
+      &__dots {
+        position: absolute;
+        bottom: 28px;  // ← 8px → 28px（img_carouselと被らない）
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 20;   // ← 追加
+      }
+
+      &__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: #ccc;
+
+        &.is-active {
+          background: #333;
+        }
+      }
+
+      &.is-dragging &__track {
+        // ドラッグ中は JS で transition: none にするので不要
       }
     }
   }

@@ -8,3 +8,4 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "profile_image"
 pin "footer"
 pin "post"
+pin "swiper" # @12.0.3

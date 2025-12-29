@@ -20,7 +20,6 @@
               .card_timeAgo
                 %p= time_ago_in_words(post.created_at) + " ago"
 
-          -# ここからが修正ポイント
           - if user_signed_in? && post.user == current_user
             .card_destroy_icon
               .dropdown
@@ -31,22 +30,31 @@
                   = link_to '削除する', post_path(post), data: { turbo_method: 'delete', turbo_confirm: '本当に削除してもよろしいですか？' }
 
         .card_content{ class: post.images.count <= 1 ? "is-single" : "" }
-          .left_img
-            - if post.images.attached? && post.images[0]
-              = image_tag post.images[0], alt: "Main Image"
+          .left_img{ data: { images_count: post.images.count } }
+            - if post.images.attached? && post.images.any?
+              .simple-carousel
+                .simple-carousel__track
+                  - post.images.each do |image|
+                    .simple-carousel__slide
+                      = image_tag image, alt: "Main Image"
+
+                -# 4枚以上のみドット表示
+                - if post.images.count >= 4
+                  .simple-carousel__dots
+                    - post.images.each_with_index do |_, i|
+                      %button.simple-carousel__dot{ data: { index: i } }
+
             - else
               = image_tag "demo-1.png", alt: "No Image"
 
-            -# 1枚だけの時はカルーセルアイコンも不要であれば、if文で囲う
-            - if post.images.count > 1
-              .img_carousel
-                = image_tag "carousel.png", alt: "Carousel"
 
-          -# 2枚以上ある時だけ右側を表示
-          - if post.images.attached? && post.images.count > 1
-            .right_images
+          .right_images
+            -# 画像が2枚以上のときに右側を表示
+            - if post.images.attached? && post.images.count > 1
               .card_img
                 = image_tag post.images[1]
+
+              -# 3枚目がある場合のみ表示
               - if post.images[2]
                 .card_img
                   = image_tag post.images[2]
