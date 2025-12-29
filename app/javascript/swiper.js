@@ -1,7 +1,7 @@
 document.addEventListener("turbo:load", () => {
   document.querySelectorAll(".left_img").forEach((container) => {
     const count = parseInt(container.dataset.imagesCount || "0", 10)
-    if (count < 4) return
+    if (count < 2) return  // 2枚未満スキップ
 
     const carousel = container.querySelector(".simple-carousel")
     if (!carousel) return
@@ -9,34 +9,45 @@ document.addEventListener("turbo:load", () => {
     const track = carousel.querySelector(".simple-carousel__track")
     const slides = carousel.querySelectorAll(".simple-carousel__slide")
     const dots = carousel.querySelectorAll(".simple-carousel__dot")
-    if (!track || slides.length === 0 || dots.length === 0) return
+    const cardContent = container.closest(".card_content")  // 親の.card_content
+    if (!track || slides.length === 0 || !cardContent) return
 
     let index = 0
     let isDragging = false
     let startX = 0
     let currentX = 0
     let translateX = 0
-
     const slideCount = slides.length
-    const threshold = 50 // ドラッグでスライド判定の閾値（px）
+    const threshold = 50
 
     const update = () => {
       translateX = -index * 100
       track.style.transform = `translateX(${translateX}%)`
       
-      dots.forEach((dot, i) => {
-        dot.classList.toggle("is-active", i === index)
-      })
+      // ドット更新
+      if (dots.length > 0) {
+        dots.forEach((dot, i) => {
+          dot.classList.toggle("is-active", i === index)
+        })
+      }
+
+      // 右側表示/非表示制御
+      if (index === 0) {
+        // 1枚目：右側表示（通常レイアウト）
+        cardContent.classList.remove("is-fullscreen")
+      } else {
+        // 2枚目以降：右側非表示（全画面）
+        cardContent.classList.add("is-fullscreen")
+      }
     }
 
-    // ドラッグ開始
+    // ドラッグ処理（既存と同じ）
     const startDrag = (clientX) => {
       isDragging = true
       startX = clientX
       track.style.transition = "none"
     }
 
-    // ドラッグ中
     const drag = (clientX) => {
       if (!isDragging) return
       currentX = clientX
@@ -44,7 +55,6 @@ document.addEventListener("turbo:load", () => {
       track.style.transform = `translateX(${translateX + (diff / window.innerWidth * 100)}%)`
     }
 
-    // ドラッグ終了
     const endDrag = () => {
       if (!isDragging) return
       isDragging = false
@@ -62,24 +72,24 @@ document.addEventListener("turbo:load", () => {
     }
 
     // ドットクリック
-    dots.forEach((dot, i) => {
-      dot.addEventListener("click", () => {
-        index = i
-        update()
+    if (dots.length > 0) {
+      dots.forEach((dot, i) => {
+        dot.addEventListener("click", () => {
+          index = i
+          update()
+        })
       })
-    })
+    }
 
-    // マウスイベント（PC）
+    // マウス・タッチイベント（既存と同じ）
     track.addEventListener("mousedown", (e) => startDrag(e.clientX))
     document.addEventListener("mousemove", (e) => drag(e.clientX))
     document.addEventListener("mouseup", endDrag)
-
-    // タッチイベント（スマホ）
     track.addEventListener("touchstart", (e) => startDrag(e.touches[0].clientX))
     document.addEventListener("touchmove", (e) => drag(e.touches[0].clientX), { passive: false })
     document.addEventListener("touchend", endDrag)
 
-    // 初期化
-    update()
+    update() // 初期化
   })
 })
+

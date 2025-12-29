@@ -38,15 +38,14 @@
                     .simple-carousel__slide
                       = image_tag image, alt: "Main Image"
 
-                -# 4枚以上のみドット表示
-                - if post.images.count >= 4
+                -# 2枚以上でドット表示
+                - if post.images.count >= 2
                   .simple-carousel__dots
                     - post.images.each_with_index do |_, i|
                       %button.simple-carousel__dot{ data: { index: i } }
 
             - else
               = image_tag "demo-1.png", alt: "No Image"
-
 
           .right_images
             -# 画像が2枚以上のときに右側を表示

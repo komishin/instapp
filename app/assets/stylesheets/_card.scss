@@ -51,7 +51,7 @@
   align-items: stretch;
 
   .left_img {
-    width: 57.7%; // 通常時
+    width: 57.7%;
     aspect-ratio: 4 / 3;
     position: relative;
 
@@ -96,23 +96,22 @@
         flex: 0 0 100%;
         width: 100%;
         height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
-
-      img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-          }
-
 
       &__dots {
         position: absolute;
-        bottom: 28px;  // ← 8px → 28px（img_carouselと被らない）
+        bottom: 28px;
         left: 50%;
         transform: translateX(-50%);
         display: flex;
         gap: 6px;
-        z-index: 20;   // ← 追加
+        z-index: 20;
       }
 
       &__dot {
@@ -126,15 +125,11 @@
           background: #333;
         }
       }
-
-      &.is-dragging &__track {
-        // ドラッグ中は JS で transition: none にするので不要
-      }
     }
   }
 
   .right_images {
-    width: 42.3%; // 通常時
+    width: 42.3%;
     display: flex;
     flex-direction: column;
     gap: 7px;
@@ -151,20 +146,28 @@
     }
   }
 
-  // --- 追加：画像が1枚だけの時のスタイル ---
+  // スライド2枚目以降：全画面モード
+  &.is-fullscreen {
+    .left_img {
+      width: 100% !important;
+    }
+    .right_images {
+      display: none !important;
+    }
+  }
+
+  // 1枚投稿時
   &.is-single {
     .left_img {
-      width: 100%; // 横幅をいっぱいに広げる
-
-      // 1枚の時に高さを変えたい場合は、ここで aspect-ratio を上書き
-      // aspect-ratio: 16 / 9; など
+      width: 100%;
     }
-
     .right_images {
-      display: none; // 右側のエリアを消す
+      display: none;
     }
   }
 }
+
+
 
 .card_actions{
     display: flex;
