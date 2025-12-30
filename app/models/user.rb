@@ -5,7 +5,9 @@ class User < ApplicationRecord
   validates :username, uniqueness: true, presence: true
 
   has_one :profile, dependent: :destroy
+  has_one_attached :avatar
   has_many :posts, dependent: :destroy
+  has_many :articles, dependent: :destroy
 
   # 1. 外部（Controller）から呼び出せるように private の上に置く
   def prepare_profile

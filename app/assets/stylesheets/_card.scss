@@ -1,0 +1,185 @@
+@use "variables" as *;// asは、そのままの＄表記のまま変数で使うために必要
+
+.homepage_photo{
+    width: 20px;
+    height: 16px;
+}
+
+.card{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card_container{
+    padding-bottom: 36px;
+}
+
+.card_header{
+    display: flex;
+    gap: 8px;
+    margin-bottom: 11px;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.card_profile{
+    margin: 0 !important;
+}
+
+.card_avatar{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.card_account{
+    font-size: $font-md;
+}
+
+.card_timeAgo{
+    font-size: $font-sm;
+    color: $text-sub-color;
+}
+
+.card_content {
+  display: flex;
+  width: 100%;
+  gap: 7px;
+  margin-top: 11px;
+  align-items: stretch;
+  height: 300px;
+
+  .left_img {
+    width: 57.7%;
+    height: 100%;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .img_carousel {
+      width: 26px;
+      height: 6px;
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+    }
+
+    .simple-carousel {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+
+      &__track {
+        display: flex;
+        transition: transform 0.3s ease;
+        width: 100%;
+        height: 100%;
+        user-select: none;
+        touch-action: pan-y;
+      }
+
+      &__slide {
+        flex: 0 0 100%;
+        width: 100%;
+        height: 100%;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      &__dots {
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 6px;
+        z-index: 20;
+      }
+
+      &__dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: #ccc;
+
+        &.is-active {
+          background: #333;
+        }
+      }
+    }
+  }
+
+  .right_images {
+    width: 42.3%;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    .card_img {
+      flex: 1;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  // スライド2枚目以降：全画面モード
+  &.is-fullscreen {
+    .left_img {
+      width: 100% !important;
+    }
+    .right_images {
+      display: none !important;
+    }
+  }
+
+  // 1枚投稿時
+  &.is-single {
+    .left_img {
+      width: 100%;
+    }
+    .right_images {
+      display: none;
+    }
+  }
+}
+
+.card_actions{
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    align-items: center;
+    margin: 12px 0 8px;
+}
+
+.card_likes{
+    font-size: 12px;
+}
+
+.card_caption{
+    font-size: 12px;
+}

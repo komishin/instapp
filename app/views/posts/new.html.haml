@@ -1,0 +1,37 @@
+.container
+  = form_with model: @post, local: true do |f|
+    .new_post_head
+      .cancel_button
+        = link_to "Cancel", root_path
+      .new_post_title
+        = "Status"
+      .new_post_submit
+        = f.submit "Post", class: 'new_post_submit_button'
+
+    .post_profile
+      .new_post_image
+        / id="avatar_trigger" を付与
+        #avatar_trigger{ style: "cursor: pointer;" }
+          - if @profile.avatar.attached?
+            = image_tag @profile.avatar, id: "avatar_preview"
+          - else
+            = image_tag "Instapp-mv.png", id: "avatar_preview"
+
+      .card_account
+        -# ここが post.user.username になっていたら current_user に直す
+        %p= current_user.username
+
+    .field.post_field
+      = f.text_area :caption, placeholder: "What's on your mind ?", class: 'post_caption_textarea'
+
+    .field.post_image_link
+      -# labelがクリックされると、紐付いたfile_fieldが起動します
+      %label.album_link{ for: 'post_images' }
+        = image_tag "plus.png", alt: "Photo", class: "album_link_icon"
+        %span.album_link_text Album
+
+      -# 実際の入力欄は完全に隠します
+      = f.file_field :images, multiple: true, direct_upload: true, id: 'post_images', style: 'display: none;'
+
+    .field_post_img
+      #image_preview_container

@@ -1,1 +1,79 @@
+.container.homePage
+  .homePage_photo
+    = link_to new_post_path do
+      = image_tag "photo.png", alt: "Home Photo"
 
+  - @posts.each do |post|
+    .card
+      .card_container
+        .card_header
+          .post_profile.card_profile
+            .new_post_image
+              - if post.user.profile&.avatar&.attached?
+                = image_tag post.user.profile.avatar
+              - else
+                = image_tag "Instapp-mv.png"
+
+            .card_title
+              .card_account
+                %p= post.user.username
+              .card_timeAgo
+                %p= time_ago_in_words(post.created_at) + " ago"
+
+          - if user_signed_in? && post.user == current_user
+            .card_destroy_icon
+              .dropdown
+                = image_tag 'actions.svg', class: 'dropbtn'
+                .dropdown-content.mini
+                  -# インデックス表示(eachの中)なら @post ではなく post を使う
+                  = link_to '編集する', edit_post_path(post)
+                  = link_to '削除する', post_path(post), data: { turbo_method: 'delete', turbo_confirm: '本当に削除してもよろしいですか？' }
+
+        .card_content{ class: post.images.count <= 1 ? "is-single" : "" }
+          .left_img{ data: { images_count: post.images.count } }
+            - if post.images.attached? && post.images.any?
+              .simple-carousel
+                .simple-carousel__track
+                  - post.images.each do |image|
+                    .simple-carousel__slide
+                      = image_tag image, alt: "Main Image"
+
+                -# 2枚以上でドット表示
+                - if post.images.count >= 2
+                  .simple-carousel__dots
+                    - post.images.each_with_index do |_, i|
+                      %button.simple-carousel__dot{ data: { index: i } }
+
+            - else
+              = image_tag "demo-1.png", alt: "No Image"
+
+          .right_images
+            -# 画像が2枚以上のときに右側を表示
+            - if post.images.attached? && post.images.count > 1
+              .card_img
+                = image_tag post.images[1]
+
+              -# 3枚目がある場合のみ表示
+              - if post.images[2]
+                .card_img
+                  = image_tag post.images[2]
+
+        .card_actions
+          .card_action
+            = image_tag "like.png", alt: "Like"
+          .card_action
+            = image_tag "comment.png", alt: "Comment"
+          .card_action
+            - share_text = "#{post.user.username}さんの投稿をチェック！"
+            - share_url = post_url(post)
+            = link_to "https://twitter.com/intent/tweet?#{ {text: share_text, url: share_url}.to_query }", target: "_blank", rel: "noopener", class: "share-link" do
+              = image_tag "share.png", alt: "Share"
+
+        .card_likes
+          -# いいね数を表示
+          %p #{number_with_delimiter(post.likes_count)} likes
+
+        .card_caption
+          %p
+            %strong= post.user.username
+            = post.caption
