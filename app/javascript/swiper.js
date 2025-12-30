@@ -23,7 +23,7 @@ document.addEventListener("turbo:load", () => {
     const update = () => {
       translateX = -index * 100
       track.style.transform = `translateX(${translateX}%)`
-      
+
       // ドット更新
       if (dots.length > 0) {
         dots.forEach((dot, i) => {
@@ -92,4 +92,3 @@ document.addEventListener("turbo:load", () => {
     update() // 初期化
   })
 })
-
