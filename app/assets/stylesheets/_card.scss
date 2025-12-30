@@ -49,10 +49,11 @@
   gap: 7px;
   margin-top: 11px;
   align-items: stretch;
+  height: 300px;
 
   .left_img {
     width: 57.7%;
-    aspect-ratio: 4 / 3;
+    height: 100%;
     position: relative;
 
     img {
@@ -166,8 +167,6 @@
     }
   }
 }
-
-
 
 .card_actions{
     display: flex;
