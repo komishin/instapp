@@ -64,7 +64,10 @@
           .card_action
             = image_tag "comment.png", alt: "Comment"
           .card_action
-            = image_tag "share.png", alt: "Share"
+            - share_text = "#{post.user.username}さんの投稿をチェック！"
+            - share_url = post_url(post)
+            = link_to "https://twitter.com/intent/tweet?#{ {text: share_text, url: share_url}.to_query }", target: "_blank", rel: "noopener", class: "share-link" do
+              = image_tag "share.png", alt: "Share"
 
         .card_likes
           -# いいね数を表示
