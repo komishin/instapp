@@ -79,9 +79,7 @@
               = image_tag "share.png", alt: "Share"
 
         .card_likes
-          -# いいね数を表示
-          %p #{number_with_delimiter(post.likes_count)} likes
-
+          %span= post.like_text
         .card_caption
           %p
             %strong= post.user.username
