@@ -9,3 +9,6 @@ pin "profile_image"
 pin "footer"
 pin "post"
 pin "swiper" # @12.0.3
+pin "jquery" # @3.7.1
+pin "@rails/actiontext", to: "@rails--actiontext.js" # @8.1.100
+pin "trix" # @2.1.15
