@@ -1,9 +1,17 @@
-// 1. まずライブラリを読み込む
 import "@hotwired/turbo-rails"
 import $ from "jquery"
-window.$ = window.jquery = $ // 2. 他のファイルが読み込まれる前にグローバル化する
+import axios from "axios" // 追加
 
-// 3. その後に自分のカスタムJSを読み込む（これで各ファイル内で $ が使える）
+window.$ = window.jquery = $
+window.axios = axios // これで他のファイルでも axios が使えます
+
+// RailsのCSRFトークンをaxiosのヘッダーに自動設定
+const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content
+if (csrfToken) {
+  axios.defaults.headers.common['X-CSRF-Token'] = csrfToken
+}
+
+// 既存のimport
 import "controllers"
 import "profile_image"
 import "footer"
@@ -13,6 +21,14 @@ import "trix"
 import "@rails/actiontext"
 
 document.addEventListener('turbo:load', () => {
-  window.alert('DOM LOADED')
-  console.log("jQuery is ready and global!");
+  console.log("jQuery and axios are ready!");
+
+  // テスト通信：自分のサイトのトップページを取得してみる
+  axios.get('/')
+    .then(response => {
+      console.log("axios通信成功！ステータスコード:", response.status);
+    })
+    .catch(error => {
+      console.error("通信エラー:", error);
+    });
 });
