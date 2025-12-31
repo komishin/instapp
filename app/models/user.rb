@@ -18,6 +18,10 @@ class User < ApplicationRecord
   # 2. ユーザー登録後に自動作成したい場合は after_create を使う
   after_create :create_default_profile
 
+  def has_liked?(post)
+    likes.exists?(post_id: post.id)
+  end
+
   private
 
   # after_create専用の非公開メソッド
