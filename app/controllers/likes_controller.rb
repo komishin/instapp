@@ -1,22 +1,27 @@
 class LikesController < ApplicationController
   before_action :authenticate_user!
+  # 共通の処理（Postの取得）をまとめることもできますが、まずは明解さ優先で
+  
+  def show
+    post = Post.find(params[:post_id])
+    render json: { hasLiked: current_user.has_liked?(post) }
+  end
 
   def create
     post = Post.find(params[:post_id])
-    # current_userに紐づけて作成（この方が「誰のいいねか」が明確）
-    current_user.likes.create!(post_id: post.id)
+    # 重複して作成されないように find_or_create_by を使うと安全
+    current_user.likes.find_or_create_by!(post_id: post.id)
 
-    # 元いた画面（一覧なら一覧、詳細なら詳細）に戻る
-    redirect_back(fallback_location: root_path)
+    # 成功した後の最新の状態を返す
+    render json: { hasLiked: true }
   end
 
   def destroy
     post = Post.find(params[:post_id])
-    # current_userのいいねの中から、この投稿に関するものを探す
-    like = current_user.likes.find_by!(post_id: post.id)
+    like = current_user.likes.find_by(post_id: post.id)
+    like&.destroy! # &.(ぼっち演算子)で、もし既に削除されていてもエラーにしない
 
-    like.destroy!
-    # 元いた画面に戻る
-    redirect_back(fallback_location: root_path)
+    # 削除した後の最新の状態を返す
+    render json: { hasLiked: false }
   end
 end

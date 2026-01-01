@@ -121,6 +121,10 @@
   }
 }
 
+.hidden {
+  display: none;
+}
+
 #image_preview_container {
   display: flex;
   flex-direction: column;
@@ -128,3 +132,4 @@
   margin-top: 20px;
   width: 100%;
 }
+

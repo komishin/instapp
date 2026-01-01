@@ -21,6 +21,6 @@ Rails.application.routes.draw do
   resources :posts, only: [ :new, :create, :show, :edit, :destroy ] do
     resources :comments, only: [ :new, :create ]
     # いいね（1つの投稿に1つ「いいねボタン」があるイメージなら resource）
-    resource :like, only: [ :create, :destroy ] # 削除（いいね解除）も必要になることが多いです
+    resource :like, only: [ :show, :create, :destroy ] # 削除（いいね解除）も必要になることが多いです
   end
 end

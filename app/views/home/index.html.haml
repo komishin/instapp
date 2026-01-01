@@ -60,16 +60,11 @@
 
         .card_actions
           - if user_signed_in?
-            - if current_user.has_liked?(post)
-              -# 【すでにいいね済みの場合】→ 解除ボタン(DELETE)を表示
-              .card_action
-                = link_to post_like_path(post), data: { turbo_method: :delete } do
-                  = image_tag 'like-active.png', alt: 'Liked'
-            - else
-              -# 【まだいいねしていない場合】→ いいねボタン(POST)を表示
-              .card_action
-                = link_to post_like_path(post), data: { turbo_method: :post } do
-                  = image_tag "like.png", alt: "Like"
+            .card_action.like-wrapper{ data: { post_id: post.id } }
+              .hidden.active-heart.hidden
+                = image_tag 'like-active.png', alt: 'Liked'
+              .hidden.inactive-heart.hidden
+                = image_tag "like.png", alt: "Like"
           .card_action
             = image_tag "comment.png", alt: "Comment"
           .card_action

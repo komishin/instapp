@@ -1,3 +1,4 @@
+// 画像スクロール表示のコード
 document.addEventListener('turbo:load', () => {
   const fileInput = document.getElementById('post_images');
   const previewContainer = document.getElementById('image_preview_container');
@@ -50,3 +51,47 @@ document.addEventListener('turbo:load', () => {
   });
 });
 
+//いいね機能のコード
+document.addEventListener('turbo:load', () => {
+  const likeWrappers = document.querySelectorAll('.like-wrapper');
+
+  likeWrappers.forEach((wrapper) => {
+    const postId = wrapper.dataset.postId;
+    const activeHeart = wrapper.querySelector('.active-heart');
+    const inactiveHeart = wrapper.querySelector('.inactive-heart');
+
+    // 1. ページ読み込み時に状態を反映 (現在のコード)
+    axios.get(`/posts/${postId}/like`)
+      .then((response) => {
+        updateVisual(response.data.hasLiked);
+      });
+
+    // 2. クリックイベントを登録
+    wrapper.addEventListener('click', (e) => {
+      e.preventDefault(); // link_to のデフォルト動作（リロード）を止める
+
+      const isLiked = !activeHeart.classList.contains('hidden');
+
+      if (isLiked) {
+        // 解除する (DELETE)
+        axios.delete(`/posts/${postId}/like`)
+          .then(res => updateVisual(false));
+      } else {
+        // いいねする (POST)
+        axios.post(`/posts/${postId}/like`)
+          .then(res => updateVisual(true));
+      }
+    });
+
+    // ハートの表示を切り替える共通関数
+    function updateVisual(hasLiked) {
+      if (hasLiked) {
+        activeHeart?.classList.remove('hidden');
+        inactiveHeart?.classList.add('hidden');
+      } else {
+        activeHeart?.classList.add('hidden');
+        inactiveHeart?.classList.remove('hidden');
+      }
+    }
+  });
+});
