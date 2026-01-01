@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :posts, dependent: :destroy
   has_many :articles, dependent: :destroy
+  has_many :likes, dependent: :destroy
 
   # 1. 外部（Controller）から呼び出せるように private の上に置く
   def prepare_profile
@@ -16,6 +17,10 @@ class User < ApplicationRecord
 
   # 2. ユーザー登録後に自動作成したい場合は after_create を使う
   after_create :create_default_profile
+
+  def has_liked?(post)
+    likes.exists?(post_id: post.id)
+  end
 
   private
 

@@ -1,10 +1,10 @@
 class PostsController < ApplicationController
   # 1. destroy を追加してログイン必須にする
-  before_action :authenticate_user!, only: [:new, :create, :destroy]
-  
+  before_action :authenticate_user!, only: [ :new, :create, :destroy ]
+
   # 2. 削除前に「自分の投稿か」を確認する
-  before_action :set_post, only: [:destroy]
-  before_action :authorize_user!, only: [:destroy]
+  before_action :set_post, only: [ :destroy ]
+  before_action :authorize_user!, only: [ :destroy ]
 
   def new
     @post = Post.new

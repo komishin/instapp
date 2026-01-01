@@ -12,8 +12,8 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # アカウント登録（sign_up）の際に、nameを保存できるように許可する
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:username])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :username ])
     # アカウント更新（account_update）の際も必要なら追加
-    devise_parameter_sanitizer.permit(:account_update, keys: [:username])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :username ])
   end
 end

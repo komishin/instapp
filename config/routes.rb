@@ -15,6 +15,12 @@ Rails.application.routes.draw do
 
   root to: "home#index"
 
-  resource :profile, only: [:show, :edit, :update]
-  resources :posts, only: [:new, :create, :show, :edit, :destroy]
+  resource :profile, only: [ :show, :edit, :update ]
+
+  # 投稿と、それに紐づくコメント・いいね
+  resources :posts, only: [ :new, :create, :show, :edit, :destroy ] do
+    resources :comments, only: [ :new, :create ]
+    # いいね（1つの投稿に1つ「いいねボタン」があるイメージなら resource）
+    resource :like, only: [ :show, :create, :destroy ] # 削除（いいね解除）も必要になることが多いです
+  end
 end
